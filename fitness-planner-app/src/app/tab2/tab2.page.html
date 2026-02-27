@@ -1,17 +1,28 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 2
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 2</ion-title>
+<ion-header>
+    <ion-toolbar>                                                                                                                                                                                                        <ion-title>Planovi treninga</ion-title>
+      <ion-buttons slot="end">                                                                                                                                                                                             <ion-button (click)="addWorkout()">
+          <ion-icon name="add-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 2 page"></app-explore-container>
-</ion-content>
+  <ion-content class="ion-padding">
+    <ion-list>
+      <ion-item *ngFor="let workout of workouts">
+        <ion-label (click)="goToDetail(workout.id)">
+          <h2>{{ workout.name }}</h2>
+          <p>{{ workout.type }}</p>
+        </ion-label>
+        <ion-button slot="end" fill="clear" color="danger" (click)="deleteWorkout(workout.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </ion-item>
+    </ion-list>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button (click)="addWorkout()">
+        <ion-icon name="add"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </ion-content>

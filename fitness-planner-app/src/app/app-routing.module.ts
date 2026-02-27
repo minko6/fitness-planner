@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';                                                        
-import { AuthGuard } from './guards/auth-guard';
-
+import { NgModule } from '@angular/core';                                                                                                                                                                          
+import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth-guard';                                                                                                                                                                 
+  
 const routes: Routes = [
   {
     path: '',
@@ -20,6 +20,11 @@ const routes: Routes = [
   {
     path: 'register',
     loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule)
+  },
+  {
+    path: 'workout-detail/:id',
+    loadChildren: () => import('./pages/workout-detail/workout-detail.module').then(m => m.WorkoutDetailPageModule),
+    canActivate: [AuthGuard]
   }
 ];
 
@@ -29,5 +34,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-
 export class AppRoutingModule {}
