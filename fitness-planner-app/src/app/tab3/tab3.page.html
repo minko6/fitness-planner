@@ -20,10 +20,13 @@
         <h2>{{ session.workoutName }}</h2>
         <p>{{ formatDate(session.date) }} &bull; {{ session.duration }} min</p>
       </ion-label>
-      <ion-badge slot="end" color="primary">{{ session.workoutType }}</ion-badge>
-      <ion-button slot="end" fill="clear" color="danger" (click)="deleteSession(session.id)">
-        <ion-icon name="trash-outline"></ion-icon>
-      </ion-button>
+      <ion-badge slot="end" [color]="getTypeColor(session.workoutType)">{{ session.workoutType }}</ion-badge>
+      <ion-button slot="end" fill="clear" color="medium" (click)="viewSession(session)">
+          <ion-icon name="eye-outline"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" fill="clear" color="danger" (click)="deleteSession(session.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
     </ion-item>
   </ion-list>
 

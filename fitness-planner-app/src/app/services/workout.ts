@@ -69,4 +69,9 @@ export class WorkoutService {
     const uid = this.getUserId();
     return this.http.delete(`${this.dbUrl}/users/${uid}/sessions/${id}.json`);
   }
+
+  getWorkoutById(id: string) {
+    const uid = this.getUserId();
+    return this.http.get(`${this.dbUrl}/users/${uid}/workouts/${id}.json`);
+  }
 }

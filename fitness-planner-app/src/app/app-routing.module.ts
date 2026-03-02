@@ -30,6 +30,11 @@ const routes: Routes = [
     path: 'progress',
     loadChildren: () => import('./pages/progress/progress.module').then(m => m.ProgressPageModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'workout-view/:workoutId/:duration',
+    loadChildren: () => import('./pages/workout-view/workout-view.module').then( m => m.WorkoutViewPageModule),
+    canActivate: [AuthGuard]
   }
 ];
 

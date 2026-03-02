@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { WorkoutService } from '../services/workout';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab3',
@@ -12,7 +13,7 @@ export class Tab3Page {
 
   sessions: any[] = [];
 
-  constructor(private workoutService: WorkoutService) {}
+  constructor(private workoutService: WorkoutService, private router: Router) {}
 
   ionViewWillEnter() {
     this.loadSessions();
@@ -40,4 +41,16 @@ export class Tab3Page {
     const [y, m, d] = isoDate.split('-');
     return `${d}/${m}/${y}`;
   }
+
+  getTypeColor(type: string): string {                                                                                                           switch (type?.toLowerCase()) {
+      case 'kardio': return 'primary';                                                                                                           case 'snaga': return 'tertiary';
+      case 'fleksibilnost': return 'warning';
+      default: return 'medium';
+    }
+  }
+
+  viewSession(session: any) {
+    this.router.navigate(['/workout-view', session.workoutId, session.duration]);
+  }
+
 }
