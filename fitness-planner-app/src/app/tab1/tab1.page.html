@@ -8,6 +8,37 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <h2>Dobrodošli!</h2>
-  <p>Ovde će biti prikazani Vaši poslednji treninzi i statistike.</p>
+
+  <ion-card>
+    <ion-card-content>
+      <div class="stat">
+        <span class="stat-number">{{ sessions.length }}</span>
+        <span class="stat-label">Ukupno treninga</span>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Poslednji treninzi</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="ion-no-padding">
+
+      <div *ngIf="recentSessions.length === 0" class="empty-state">
+        <p>Još nema odrađenih treninga.</p>
+      </div>
+
+      <ion-list *ngIf="recentSessions.length > 0" lines="full">
+        <ion-item *ngFor="let session of recentSessions">
+          <ion-label>
+            <h2>{{ session.workoutName }}</h2>
+            <p>{{ formatDate(session.date) }} &bull; {{ session.duration }} min</p>
+          </ion-label>
+          <ion-badge slot="end" color="primary">{{ session.workoutType }}</ion-badge>
+        </ion-item>
+      </ion-list>
+
+    </ion-card-content>
+  </ion-card>
+
 </ion-content>

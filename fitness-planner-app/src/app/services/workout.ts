@@ -45,14 +45,28 @@ export class WorkoutService {
   getProfile() {                                                                                                            const uid = this.getUserId();
       return this.http.get(`${this.dbUrl}/users/${uid}/profile.json`);                                                      }
 
-    addWeightEntry(entry: any) {
-      const uid = this.getUserId();
-      return this.http.post(`${this.dbUrl}/users/${uid}/weightHistory.json`, entry);
-    }
+  addWeightEntry(entry: any) {
+    const uid = this.getUserId();
+    return this.http.post(`${this.dbUrl}/users/${uid}/weightHistory.json`, entry);
+  }
 
-    getWeightHistory() {
-      const uid = this.getUserId();
-      return this.http.get(`${this.dbUrl}/users/${uid}/weightHistory.json`);
-    }
+  getWeightHistory() {
+    const uid = this.getUserId();
+    return this.http.get(`${this.dbUrl}/users/${uid}/weightHistory.json`);
+  }
   
+  addSession(session: any) {
+    const uid = this.getUserId();
+    return this.http.post(`${this.dbUrl}/users/${uid}/sessions.json`, session);
+  }
+
+  getSessions() {
+    const uid = this.getUserId();
+    return this.http.get(`${this.dbUrl}/users/${uid}/sessions.json`);
+  }
+
+  deleteSession(id: string) {
+    const uid = this.getUserId();
+    return this.http.delete(`${this.dbUrl}/users/${uid}/sessions/${id}.json`);
+  }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';                                                                                         
 import { WorkoutService } from '../services/workout';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab2',
@@ -13,7 +14,7 @@ export class Tab2Page implements OnInit {
 
   workouts: any[] = [];
 
-  constructor(private workoutService: WorkoutService, private router: Router) {}
+  constructor(private workoutService: WorkoutService, private router: Router, private alertCtrl: AlertController) {}
 
   ngOnInit() {
     this.loadWorkouts();
@@ -49,5 +50,39 @@ export class Tab2Page implements OnInit {
     this.workoutService.deleteWorkout(id).subscribe(() => {
       this.loadWorkouts();
     });
+  }
+
+  async startSession(workout: any, event: Event) {
+    event.stopPropagation();
+    const alert = await this.alertCtrl.create({
+      header: 'Pokreni trening',
+      subHeader: workout.name,
+      inputs: [
+        {
+          name: 'duration',
+          type: 'number',
+          placeholder: 'Trajanje u minutima'
+        }
+      ],
+      buttons: [
+        { text: 'Otkaži', role: 'cancel' },
+        {
+          text: 'Sačuvaj',
+          handler: (data: any) => {
+            if (!data.duration) return false;
+            const session = {
+              workoutId: workout.id,
+              workoutName: workout.name,
+              workoutType: workout.type,
+              date: new Date().toISOString().split('T')[0],
+              duration: Number(data.duration)
+            };
+            this.workoutService.addSession(session).subscribe();
+              return true;
+          }
+        }
+      ]
+    });
+    await alert.present();
   }
 }

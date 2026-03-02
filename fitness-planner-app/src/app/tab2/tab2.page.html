@@ -14,9 +14,12 @@
         <h2>{{ workout.name }}</h2>
         <p>{{ workout.type }}</p>
       </ion-label>
-      <ion-button slot="end" fill="clear" color="danger" (click)="deleteWorkout(workout.id, $event)">
-        <ion-icon name="trash-outline"></ion-icon>
-      </ion-button>
+      <ion-button slot="end" fill="clear" color="success" (click)="startSession(workout, $event)">
+          <ion-icon name="play-outline"></ion-icon>
+        </ion-button>
+        <ion-button slot="end" fill="clear" color="danger" (click)="deleteWorkout(workout.id, $event)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
     </ion-item>
   </ion-list>
 
