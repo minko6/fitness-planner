@@ -25,6 +25,11 @@ const routes: Routes = [
     path: 'workout-detail/:id',
     loadChildren: () => import('./pages/workout-detail/workout-detail.module').then(m => m.WorkoutDetailPageModule),
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'progress',
+    loadChildren: () => import('./pages/progress/progress.module').then(m => m.ProgressPageModule),
+    canActivate: [AuthGuard]
   }
 ];
 

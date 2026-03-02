@@ -1,0 +1,104 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/tabs/tab1" text="Nazad"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Moj progres</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+    <!--Informacije o profilu -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Profil</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+
+        <!-- Prikaz podataka (kad nije editMode) -->
+      <div *ngIf="!editMode">
+        <p><strong>Ime:</strong> {{ profile?.name }}</p>
+        <p><strong>Visina:</strong> {{ profile?.height }} cm</p>
+        <p><strong>Težina:</strong> {{ profile?.weight }} kg</p>
+        <ion-button fill="outline" (click)="enterEditMode()">
+          <ion-icon name="pencil-outline" slot="start"></ion-icon>
+          Izmeni
+        </ion-button>
+      </div>
+
+        <!-- Forma za izmenu (kad je editMode = true) -->
+      <div *ngIf="editMode">
+        <ion-item>
+          <ion-label position="stacked">Ime</ion-label>
+          <ion-input [(ngModel)]="profile.name" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Visina (cm)</ion-label>
+          <ion-input [(ngModel)]="profile.height" type="number"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Težina (kg)</ion-label>
+          <ion-input [(ngModel)]="profile.weight" type="number"></ion-input>
+        </ion-item>
+        <div class="button-row">
+          <ion-button (click)="saveProfile()">Sačuvaj</ion-button>
+          <ion-button fill="outline" color="medium" (click)="editMode = false">Otkaži</ion-button>
+        </div>
+      </div>
+
+    </ion-card-content>
+  </ion-card>
+
+    <!-- Kartica BMI -->
+  <ion-card *ngIf="bmi !== null">
+    <ion-card-header>
+      <ion-card-title>BMI Indeks</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="bmi-value" [class]="bmiColor">{{ bmi }}</div>
+      <p class="bmi-category">{{ bmiCategory }}</p>
+      <div class="bmi-scale">
+        <span class="bmi-under">&#60; 18.5<br>Premršav</span>
+        <span class="bmi-normal">18.5–24.9<br>Normalno</span>
+        <span class="bmi-over">25–29.9<br>Prekomerno</span>
+        <span class="bmi-obese">&#62; 30<br>Gojaznost</span>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+    <!-- Dodaj novo merenje -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Dodaj merenje</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item>
+        <ion-label position="stacked">Nova težina (kg)</ion-label>
+        <ion-input [(ngModel)]="newWeight" type="number" placeholder="npr. 75.5"></ion-input>
+      </ion-item>
+      <ion-button expand="block" (click)="addWeightEntry()" class="ion-margin-top">
+        <ion-icon name="add-outline" slot="start"></ion-icon>
+        Dodaj merenje
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+    <!-- Istorija tezine tabela -->
+  <ion-card *ngIf="weightHistory.length > 0">
+    <ion-card-header>
+      <ion-card-title>Istorija težine</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="ion-no-padding">
+      <ion-list lines="full">
+        <ion-item *ngFor="let entry of weightHistory; let i = index">
+          <ion-label>{{ formatDate(entry.date) }}</ion-label>
+          <ion-badge slot="end" [color]="getWeightColor(i)">
+            {{ entry.weight }} kg
+          </ion-badge>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

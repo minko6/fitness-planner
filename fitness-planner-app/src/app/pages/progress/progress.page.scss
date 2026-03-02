@@ -1,0 +1,40 @@
+.bmi-value {
+    font-size: 3.5rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 8px 0;
+
+    &.success { color: var(--ion-color-success); }
+    &.warning { color: var(--ion-color-warning); }
+    &.danger  { color: var(--ion-color-danger);  }
+}
+
+.bmi-category {
+    text-align: center;
+    font-size: 1rem;
+    color: var(--ion-color-medium);
+    margin-bottom: 16px;
+}
+
+.bmi-scale {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    font-size: 0.68rem;
+    border-top: 1px solid var(--ion-color-light);
+    padding-top: 10px;
+    line-height: 1.4;
+
+    span { flex: 1; padding: 4px 2px; }
+
+    .bmi-under  { color: var(--ion-color-warning); }
+    .bmi-normal { color: var(--ion-color-success); }
+    .bmi-over   { color: var(--ion-color-warning); }
+    .bmi-obese  { color: var(--ion-color-danger);  }
+}
+
+.button-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}

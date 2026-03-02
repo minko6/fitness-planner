@@ -1,18 +1,37 @@
-<ion-header>                                                                                                                        <ion-toolbar>
-    <ion-title>Registracija</ion-title>                                                                                             </ion-toolbar>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registracija</ion-title>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item>
-    <ion-label position="floating">Email</ion-label>
+
+  <ion-item fill="outline">
+    <ion-label position="stacked">Ime i prezime</ion-label>
+    <ion-input type="text" [(ngModel)]="name"></ion-input>
+  </ion-item>
+
+  <ion-item fill="outline">
+    <ion-label position="stacked">Email</ion-label>
     <ion-input type="email" [(ngModel)]="email"></ion-input>
   </ion-item>
 
-  <ion-item>
-    <ion-label position="floating">Lozinka</ion-label>
+  <ion-item fill="outline">
+    <ion-label position="stacked">Lozinka</ion-label>
     <ion-input type="password" [(ngModel)]="password"></ion-input>
+  </ion-item>
+
+  <ion-item fill="outline">
+    <ion-label position="stacked">Visina (cm)</ion-label>
+    <ion-input type="number" [(ngModel)]="height"></ion-input>
+  </ion-item>
+
+  <ion-item fill="outline">
+    <ion-label position="stacked">Težina (kg)</ion-label>
+    <ion-input type="number" [(ngModel)]="weight"></ion-input>
   </ion-item>
 
   <ion-button expand="block" class="ion-margin-top" (click)="register()">Registruj se</ion-button>
   <ion-button expand="block" fill="outline" (click)="goToLogin()">Već imam nalog</ion-button>
+
 </ion-content>

@@ -36,4 +36,23 @@ export class WorkoutService {
     const uid = this.getUserId();
     return this.http.delete(`${this.dbUrl}/users/${uid}/workouts/${id}.json`);
   }
+
+  saveProfile(profile: any) {
+    const uid = this.getUserId();
+    return this.http.put(`${this.dbUrl}/users/${uid}/profile.json`, profile);
+  }
+
+  getProfile() {                                                                                                            const uid = this.getUserId();
+      return this.http.get(`${this.dbUrl}/users/${uid}/profile.json`);                                                      }
+
+    addWeightEntry(entry: any) {
+      const uid = this.getUserId();
+      return this.http.post(`${this.dbUrl}/users/${uid}/weightHistory.json`, entry);
+    }
+
+    getWeightHistory() {
+      const uid = this.getUserId();
+      return this.http.get(`${this.dbUrl}/users/${uid}/weightHistory.json`);
+    }
+  
 }
