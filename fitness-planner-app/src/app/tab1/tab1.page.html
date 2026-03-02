@@ -9,15 +9,53 @@
 
 <ion-content class="ion-padding">
 
+  <!-- Statistike -->
   <ion-card>
     <ion-card-content>
-      <div class="stat">
-        <span class="stat-number">{{ sessions.length }}</span>
-        <span class="stat-label">Ukupno treninga</span>
+      <div class="stats-row">
+        <div class="stat">
+          <span class="stat-number">{{ sessions.length }}</span>
+          <span class="stat-label">Ukupno treninga</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-number">{{ totalMinutes }}</span>
+          <span class="stat-label">Ukupno minuta</span>
+        </div>
       </div>
     </ion-card-content>
   </ion-card>
 
+  <!-- Treninzi po tipu -->
+  <ion-card *ngIf="typeKeys.length > 0">
+    <ion-card-header>
+      <ion-card-title>Po tipu treninga</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="ion-no-padding">
+      <div *ngFor="let type of typeKeys">
+
+        <ion-item button detail="false" (click)="toggleType(type)" lines="full">
+          <ion-label><strong>{{ type }}</strong></ion-label>
+          <ion-badge slot="end" color="primary">{{ groupedSessions[type].length }}</ion-badge>
+          <ion-icon slot="end"
+            [name]="expandedType === type ? 'chevron-up-outline' : 'chevron-down-outline'">
+          </ion-icon>
+        </ion-item>
+
+        <div *ngIf="expandedType === type">
+          <ion-item *ngFor="let session of groupedSessions[type]" lines="inset">
+            <ion-label>
+              <h3>{{ session.workoutName }}</h3>
+              <p>{{ formatDate(session.date) }} &bull; {{ session.duration }} min</p>
+            </ion-label>
+          </ion-item>
+        </div>
+
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Poslednja 3 treninga -->
   <ion-card>
     <ion-card-header>
       <ion-card-title>Poslednji treninzi</ion-card-title>
@@ -34,7 +72,7 @@
             <h2>{{ session.workoutName }}</h2>
             <p>{{ formatDate(session.date) }} &bull; {{ session.duration }} min</p>
           </ion-label>
-          <ion-badge slot="end" color="primary">{{ session.workoutType }}</ion-badge>
+          <ion-badge slot="end" [color]="getTypeColor(session.workoutType)">{{ session.workoutType }}</ion-badge>
         </ion-item>
       </ion-list>
 
