@@ -1,30 +1,92 @@
-<ion-header>                                                                                                                                                                                                         <ion-toolbar>
-      <ion-buttons slot="start">                                                                                                                                                                                           <ion-button (click)="cancel()">Otkaži</ion-button>
-      </ion-buttons>
-      <ion-title>{{ isNew ? 'Novi plan' : 'Izmeni plan' }}</ion-title>
-      <ion-buttons slot="end">
-        <ion-button (click)="save()">Sačuvaj</ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+<ion-header>                                                                                                              <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">Otkaži</ion-button>
+    </ion-buttons>
+    <ion-title>{{ isNew ? 'Novi plan' : 'Izmeni plan' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()">Sačuvaj</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content class="ion-padding">
-    <ion-item>
-      <ion-label position="floating">Naziv plana</ion-label>
-      <ion-input [(ngModel)]="workout.name"></ion-input>
-    </ion-item>
+<ion-content class="ion-padding">
 
-    <ion-item>
-      <ion-label position="floating">Opis</ion-label>
-      <ion-textarea [(ngModel)]="workout.description"></ion-textarea>
-    </ion-item>
+  <ion-item fill="outline">
+    <ion-label position="stacked">Naziv plana</ion-label>
+    <ion-input [(ngModel)]="workout.name"></ion-input>
+  </ion-item>
 
-    <ion-item>
-      <ion-label>Tip treninga</ion-label>
-      <ion-select [(ngModel)]="workout.type">
-        <ion-select-option value="snaga">Snaga</ion-select-option>
-        <ion-select-option value="kardio">Kardio</ion-select-option>
-        <ion-select-option value="fleksibilnost">Fleksibilnost</ion-select-option>
-      </ion-select>
-    </ion-item>
-  </ion-content>
+  <ion-item fill="outline">
+    <ion-label position="stacked">Opis</ion-label>
+    <ion-textarea [(ngModel)]="workout.description" rows="1" auto-grow></ion-textarea>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Tip treninga</ion-label>
+    <ion-select [(ngModel)]="workout.type">
+      <ion-select-option value="snaga">Snaga</ion-select-option>
+      <ion-select-option value="kardio">Kardio</ion-select-option>
+      <ion-select-option value="fleksibilnost">Fleksibilnost</ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <div class="section-title">
+    <h3>Vežbe</h3>
+  </div>
+
+  <ion-list>
+    <div *ngFor="let exercise of workout.exercises; let i = index">
+
+      <ion-item button detail="false" (click)="toggleExercise(i)">
+        <ion-label>
+          <strong>{{ exercise.name || 'Nova vežba' }}</strong>
+        </ion-label>
+        <div slot="end" class="exercise-summary">
+          <span *ngIf="exercise.sets">{{ exercise.sets }}×{{ exercise.reps }}</span>
+          <span *ngIf="exercise.weight">{{ exercise.weight }}kg</span>
+        </div>
+        <ion-icon slot="end" [name]="expandedIndex === i ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+      </ion-item>
+
+      <div *ngIf="expandedIndex === i" class="exercise-edit">
+        <ion-item fill="outline">
+          <ion-label position="stacked">Naziv vežbe</ion-label>
+          <ion-input [(ngModel)]="exercise.name"></ion-input>
+        </ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-item fill="outline">
+                <ion-label position="stacked">Setovi</ion-label>
+                <ion-input type="number" [(ngModel)]="exercise.sets"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item fill="outline">
+                <ion-label position="stacked">Ponavljanja</ion-label>
+                <ion-input type="number" [(ngModel)]="exercise.reps"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item fill="outline">
+                <ion-label position="stacked">kg</ion-label>
+                <ion-input type="number" [(ngModel)]="exercise.weight"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+        <ion-button fill="clear" color="danger" (click)="removeExercise(i)">
+          <ion-icon name="trash-outline" slot="start"></ion-icon>
+          Ukloni vežbu
+        </ion-button>
+      </div>
+
+    </div>
+  </ion-list>
+
+  <ion-button expand="block" fill="outline" (click)="addExercise()" class="ion-margin-top">
+    <ion-icon name="add-outline" slot="start"></ion-icon>
+    Dodaj vežbu
+  </ion-button>
+
+</ion-content>

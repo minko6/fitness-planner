@@ -1,28 +1,25 @@
 <ion-header>
-    <ion-toolbar>                                                                                                                                                                                                        <ion-title>Planovi treninga</ion-title>
-      <ion-buttons slot="end">                                                                                                                                                                                             <ion-button (click)="addWorkout()">
-          <ion-icon name="add-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-title>Planovi treninga</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content class="ion-padding">
-    <ion-list>
-      <ion-item *ngFor="let workout of workouts">
-        <ion-label (click)="goToDetail(workout.id)">
-          <h2>{{ workout.name }}</h2>
-          <p>{{ workout.type }}</p>
-        </ion-label>
-        <ion-button slot="end" fill="clear" color="danger" (click)="deleteWorkout(workout.id)">
-          <ion-icon name="trash-outline"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </ion-list>
+<ion-content class="ion-padding">
+  <ion-list>
+    <ion-item button detail *ngFor="let workout of workouts" (click)="goToDetail(workout.id)">
+      <ion-label>
+        <h2>{{ workout.name }}</h2>
+        <p>{{ workout.type }}</p>
+      </ion-label>
+      <ion-button slot="end" fill="clear" color="danger" (click)="deleteWorkout(workout.id, $event)">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
 
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button (click)="addWorkout()">
-        <ion-icon name="add"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
-  </ion-content>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="addWorkout()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

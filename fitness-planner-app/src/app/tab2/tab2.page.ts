@@ -44,7 +44,8 @@ export class Tab2Page implements OnInit {
     this.router.navigate(['/workout-detail', 'new']);
   }
 
-  deleteWorkout(id: string) {
+  deleteWorkout(id: string, event: Event) {
+    event.stopPropagation();
     this.workoutService.deleteWorkout(id).subscribe(() => {
       this.loadWorkouts();
     });

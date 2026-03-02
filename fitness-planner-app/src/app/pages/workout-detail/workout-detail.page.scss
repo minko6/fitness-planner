@@ -1,0 +1,32 @@
+ion-item[fill="outline"] {
+    margin-bottom: 12px;
+}
+
+ion-textarea {
+    --padding-top: 8px;
+    --min-height: 20px;
+}
+
+.section-title {
+    padding: 16px 0 4px 0;
+
+    h3 {
+      margin: 0;
+      font-weight: 600;
+      color: var(--ion-color-dark);
+    }
+}
+
+.exercise-summary {
+    display: flex;
+    gap: 10px;
+    color: var(--ion-color-medium);
+    font-size: 0.85rem;
+    margin-right: 8px;
+}
+
+.exercise-edit {
+    background: var(--ion-background-color);
+    border-left: 3px solid var(--ion-color-primary);
+    padding: 4px 0;
+}
