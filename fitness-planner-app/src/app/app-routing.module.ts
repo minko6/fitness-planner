@@ -1,15 +1,24 @@
-import { NgModule } from '@angular/core';                                                                                                                                                                          
+import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from './guards/auth-guard';                                                                                                                                                                 
-  
+import { AuthGuard } from './guards/auth-guard';
+
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'welcome',
+    pathMatch: 'full'
+  },
+  {
+    path: 'welcome',
+    loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule)
+  },
+  {
+    path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
     canActivate: [AuthGuard]
   },
   {
-    path: 'tabs',
+    path: '',
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
     canActivate: [AuthGuard]
   },
@@ -33,7 +42,7 @@ const routes: Routes = [
   },
   {
     path: 'workout-view/:workoutId/:duration',
-    loadChildren: () => import('./pages/workout-view/workout-view.module').then( m => m.WorkoutViewPageModule),
+    loadChildren: () => import('./pages/workout-view/workout-view.module').then(m => m.WorkoutViewPageModule),
     canActivate: [AuthGuard]
   }
 ];
@@ -44,4 +53,5 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
+  
 export class AppRoutingModule {}
