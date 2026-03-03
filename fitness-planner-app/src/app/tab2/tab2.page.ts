@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';                                                                                         
+import { Component, OnInit } from '@angular/core';                                                                                    
 import { WorkoutService } from '../services/workout';
 import { AlertController } from '@ionic/angular';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -18,6 +18,12 @@ export class Tab2Page implements OnInit {
 
   ngOnInit() {
     this.loadWorkouts();
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd && event.url.includes('tab2')) {
+        this.loadWorkouts();
+      }
+    });
   }
 
   ionViewWillEnter() {

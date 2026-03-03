@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { WorkoutService } from '../../services/workout';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-workout-detail',
@@ -24,7 +25,8 @@ export class WorkoutDetailPage implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private workoutService: WorkoutService
+    private workoutService: WorkoutService,
+    private navCtrl: NavController
   ) {}
 
   ngOnInit() {
@@ -64,16 +66,16 @@ export class WorkoutDetailPage implements OnInit {
   save() {
     if (this.isNew) {
       this.workoutService.addWorkout(this.workout).subscribe(() => {
-        this.router.navigate(['/tabs/tab2']);
+        this.navCtrl.back();
       });
     } else {
       this.workoutService.updateWorkout(this.workoutId, this.workout).subscribe(() => {
-        this.router.navigate(['/tabs/tab2']);
+        this.navCtrl.back();
       });
     }
   }
 
   cancel() {
-    this.router.navigate(['/tabs/tab2']);
+    this.navCtrl.back();
   }
 }
