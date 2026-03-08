@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';                                                                                                                                                                        
 import { CanActivate, Router } from '@angular/router';
-import { Auth } from '@angular/fire/auth';
+import { AuthService } from '../services/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -8,18 +8,13 @@ import { Auth } from '@angular/fire/auth';
   
 export class AuthGuard implements CanActivate {
 
-  constructor(private auth: Auth, private router: Router) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  canActivate(): Promise<boolean> {
-    return new Promise((resolve) => {
-      this.auth.onAuthStateChanged(user => {
-        if (user) {
-          resolve(true);
-        } else {
-          this.router.navigate(['/welcome']);
-          resolve(false);
-        }
-      });
-    });
+  canActivate(): boolean {
+    if (this.authService.isLoggedIn()) {
+      return true;
+    }
+    this.router.navigate(['/welcome']);
+    return false;
   }
 }

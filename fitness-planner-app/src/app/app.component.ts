@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 import { MenuController } from '@ionic/angular';
 import { AuthService } from './services/auth';
 import { WorkoutService } from './services/workout';
@@ -19,23 +18,23 @@ export class AppComponent {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private auth: Auth,
     private menu: MenuController,
     private workoutService: WorkoutService
   ) {
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
+    if (this.authService.isLoggedIn()) {
+      this.authService.verifyToken().then(() => {
         this.workoutService.getProfile().subscribe((data: any) => {
           if (data) this.profile = data;
         });
-      } else {
-        this.profile = null;
-      }
-    });
+      }).catch(() => {
+        this.authService.logout();
+        this.router.navigate(['/welcome']);
+      });
+    }
   }
 
   get userEmail() {
-    return this.auth.currentUser?.email || '';
+    return localStorage.getItem('email') || '';
   }
 
   get userInitials(): string {
